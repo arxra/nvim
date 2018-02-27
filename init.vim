@@ -10,22 +10,28 @@ call plug#begin( '~/.config/nvim/plugged')
 Plug 'slashmili/alchemist.vim'
 Plug 'iCyMind/NeoSolarized'
 Plug 'brooth/far.vim'
-Plug 'Valloric/YouCompleteMe'
-Plug 'airodactyl/neovim-ranger'
+"Plug 'Valloric/YouCompleteMe'
+"Plug 'airodactyl/neovim-ranger'
+Plug 'scrooloose/nerdtree'
 Plug 'donRaphaco/neotex'
 Plug 'neomake/neomake'
-"Plug 'dbgx/lldb.nvim' 
+Plug 'sbdchd/neoformat'
+Plug 'dbgx/lldb.nvim' 
 Plug 'elixir-lang/vim-elixir'
 Plug 'severin-lemaignan/vim-minimap'
 Plug 'vim-scripts/vim-auto-save'
+Plug 'ervandew/eclim'
+Plug 'artur-shaik/vim-javacomplete2'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
 
 call plug#end()
 "}}}
 
 
 "Paths"
-let g:python3_host_prog = expand('~/.config/nvim/env/bin/python')
-let g:python2_host_prog = '/usr/bin/python2.7'
+"let g:python3_host_prog = expand('~/.config/nvim/env/bin/python')
+"let g:python2_host_prog = '/usr/bin/python2.7'
 
 "Highliting/scheme"
 colorscheme NeoSolarized
