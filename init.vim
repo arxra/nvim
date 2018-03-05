@@ -26,6 +26,8 @@ Plug 'vim-scripts/vim-auto-save'
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'ternjs/tern_for_vim', { 'do': 'npm install' } "Live seach through code for completion
 Plug 'itchyny/lightline.vim' "Statusline
+Plug 'jiangmiao/auto-pairs'
+
 
 call plug#end()
 "}}}
