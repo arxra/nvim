@@ -7,7 +7,7 @@ endif
 " ================ Plugins ==================== {{{
 call plug#begin( '~/.config/nvim/plugged')
 
-Plug 'vim-pandoc/vim-pandoc'
+Plug 'shime/vim-livedown'
 Plug 'janko-m/vim-test'
 Plug 'slashmili/alchemist.vim'
 Plug 'iCyMind/NeoSolarized'
@@ -15,21 +15,24 @@ Plug 'brooth/far.vim'
 "Plug 'airodactyl/neovim-ranger'
 Plug 'scrooloose/nerdtree'
 Plug 'donRaphaco/neotex'
-Plug 'neomake/neomake'
+Plug 'tpope/vim-dispatch'
 Plug 'sbdchd/neoformat'
 Plug 'dbgx/lldb.nvim' 
+
+"--- Language packs ----
+Plug 'rust-lang/rust.vim'
 Plug 'elixir-lang/vim-elixir'
-Plug 'severin-lemaignan/vim-minimap'
-Plug 'vim-scripts/vim-auto-save'
+Plug 'LaTeX-Box-Team/LaTeX-Box'
+
 "--- Auto complettion engines and plugs---
+Plug 'Valloric/YouCompleteMe'
 Plug 'ervandew/eclim'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' } "Live seach through code for completion
 Plug 'itchyny/lightline.vim' "Statusline
 Plug 'jiangmiao/auto-pairs'
-Plug 'zchee/deoplete-jedi'
-Plug 'zchee/deoplete-clang'
 Plug 'tweekmonster/django-plus.vim'
+Plug 'vim-syntastic/syntastic'
+Plug 'vim-pandoc/vim-pandoc'
 
 call plug#end()
 "}}}
@@ -38,9 +41,12 @@ call plug#end()
 "Highliting/scheme"
 colorscheme NeoSolarized
 set background=dark
+set termguicolors
 
 let g:minimap_highlight='Visual'
 
+" ================ Markdown ===========================
+let g:livedown_port = 1337
 
 " ================ Keybinds ========================={{{
 let mapleader = " "
@@ -70,23 +76,19 @@ let g:lightline = {
       \   'gitbranch': 'fugitive#head'
       \ },
       \ }
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#min_pattern_length = 0
-let g:deoplete#enable_smart_case = 1
 
 "Eclim also wants in on that sweet omnifunc action
 let g:EclimCompletionMethod = 'omnifunc'
-let g:deoplete#omni#input_patterns = {}
-let g:deoplete#omni#input_patterns.java = '[^. *\t]\.\w*'
 "}}}
 "
 " =================== YCM ======================= {{{
 "let g:ycm_global_ycm_extra_conf = '/home/jarhb/.config/nvim/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-"let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
-"let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
-"let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
-"let g:ycm_complete_in_comments = 1 " Completion in comments
-"let g:ycm_complete_in_strings = 1 " Completion in string
+let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
+let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
+let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
+let g:ycm_complete_in_comments = 1 " Completion in comments
+let g:ycm_complete_in_strings = 1 " Completion in string
+set completeopt=longest,menuone
 
 "}}}
 " ================ Persistent Undo ================== {{{
