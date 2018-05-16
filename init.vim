@@ -18,6 +18,7 @@ Plug 'donRaphaco/neotex'
 Plug 'tpope/vim-dispatch'
 Plug 'sbdchd/neoformat'
 Plug 'dbgx/lldb.nvim' 
+Plug 'tpope/vim-fugitive'
 
 "--- Language packs ----
 Plug 'rust-lang/rust.vim'
@@ -62,7 +63,6 @@ nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
 " }}}
 "
 " ================== Theme ======================= {{{
