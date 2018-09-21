@@ -11,6 +11,7 @@ Plug 'shime/vim-livedown'
 Plug 'janko-m/vim-test'
 Plug 'slashmili/alchemist.vim'
 Plug 'iCyMind/NeoSolarized'
+Plug 'sickill/vim-monokai'
 Plug 'brooth/far.vim'
 "Plug 'airodactyl/neovim-ranger'
 Plug 'scrooloose/nerdtree'
@@ -24,10 +25,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'rust-lang/rust.vim'
 Plug 'elixir-lang/vim-elixir'
 Plug 'LaTeX-Box-Team/LaTeX-Box'
+Plug 'mxw/vim-prolog'
 
 "--- Auto complettion engines and plugs---
 Plug 'Valloric/YouCompleteMe'
-Plug 'ervandew/eclim'
+"Plug 'ervandew/eclim'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' } "Live seach through code for completion
 Plug 'itchyny/lightline.vim' "Statusline
 Plug 'jiangmiao/auto-pairs'
@@ -40,7 +42,7 @@ call plug#end()
 
 
 "Highliting/scheme"
-colorscheme NeoSolarized
+colorscheme monokai
 set background=dark
 set termguicolors
 
@@ -67,7 +69,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 "
 " ================== Theme ======================= {{{
 let g:lightline = {
-      \ 'colorscheme': 'solarized',
+      \ 'colorscheme': 'monokai',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
@@ -82,7 +84,7 @@ let g:EclimCompletionMethod = 'omnifunc'
 "}}}
 "
 " =================== YCM ======================= {{{
-"let g:ycm_global_ycm_extra_conf = '/home/jarhb/.config/nvim/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+"let g:ycm_global_ycm_extra_conf = '$USER/.config/nvim/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
 let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
 let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
@@ -102,10 +104,9 @@ set undofile
 " ================ Indentation ====================== {{{
 
 set number
-set relativenumber
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
 set expandtab
 set smartindent
 set nofoldenable
