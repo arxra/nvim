@@ -69,7 +69,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 "
 " ================== Theme ======================= {{{
 let g:lightline = {
-      \ 'colorscheme': 'monokai',
+      \ 'colorscheme': 'wombawombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
