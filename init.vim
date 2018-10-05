@@ -36,6 +36,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tweekmonster/django-plus.vim'
 Plug 'vim-syntastic/syntastic'
 Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 
 call plug#end()
 "}}}
@@ -69,7 +70,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 "
 " ================== Theme ======================= {{{
 let g:lightline = {
-      \ 'colorscheme': 'wombawombat',
+      \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
@@ -81,6 +82,8 @@ let g:lightline = {
 
 "Eclim also wants in on that sweet omnifunc action
 let g:EclimCompletionMethod = 'omnifunc'
+:set spelllang=sv,en
+:set spell
 "}}}
 "
 " =================== YCM ======================= {{{
