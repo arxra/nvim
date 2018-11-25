@@ -84,6 +84,8 @@ let g:lightline = {
 let g:EclimCompletionMethod = 'omnifunc'
 :set spelllang=sv,en
 :set spell
+"Autosave? yes please!
+autocmd TextChanged,TextChangedI <buffer> silent write
 "}}}
 "
 " =================== YCM ======================= {{{
