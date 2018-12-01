@@ -7,6 +7,7 @@ endif
 " ================ Plugins ==================== {{{
 call plug#begin( '~/.config/nvim/plugged')
 
+Plug 'Yggdroot/indentLine'
 Plug 'shime/vim-livedown'
 Plug 'janko-m/vim-test'
 Plug 'slashmili/alchemist.vim'
@@ -117,6 +118,7 @@ set smartindent
 set nofoldenable
 set colorcolumn=120
 set foldmethod=syntax
+let g:indentLine_char = '│'
 
 " }}}
 
