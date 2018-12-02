@@ -1,7 +1,7 @@
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 " ================ Plugins ==================== {{{
@@ -22,18 +22,19 @@ Plug 'dbgx/lldb.nvim'
 Plug 'tpope/vim-fugitive'
 
 "--- Language packs ----
-Plug 'rust-lang/rust.vim'
+"Plug 'rust-lang/rust.vim'
 Plug 'elixir-lang/vim-elixir'
 Plug 'LaTeX-Box-Team/LaTeX-Box'
 Plug 'mxw/vim-prolog'
 
 "--- Auto complettion engines and plugs---
-Plug 'Valloric/YouCompleteMe'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+"Plug 'Valloric/YouCompleteMe'
 "Plug 'ervandew/eclim'
-Plug 'ternjs/tern_for_vim', { 'do': 'npm install' } "Live seach through code for completion
+"Plug 'ternjs/tern_for_vim', { 'do': 'npm install' } "Live seach through code for completion
 Plug 'itchyny/lightline.vim' "Statusline
-Plug 'jiangmiao/auto-pairs'
-Plug 'tweekmonster/django-plus.vim'
+"Plug 'jiangmiao/auto-pairs'
+"Plug 'tweekmonster/django-plus.vim'
 Plug 'vim-syntastic/syntastic'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
@@ -55,8 +56,6 @@ let g:livedown_port = 1337
 " ================ Keybinds ========================={{{
 let mapleader = " "
 
-"Deoplete binds
-"inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 "NERDTREE Toggle key
 map <silent> <F2> :NERDTreeToggle<CR>
@@ -70,15 +69,15 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 "
 " ================== Theme ======================= {{{
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
-      \ },
-      \ }
+            \ 'colorscheme': 'wombat',
+            \ 'active': {
+            \   'left': [ [ 'mode', 'paste' ],
+            \             [ 'cocstatus','gitbranch', 'readonly', 'filename', 'modified' ] ]
+            \ },
+            \ 'component_function': {
+            \   'gitbranch': 'fugitive#head',
+            \   'cocstatus': 'coc#status'}
+            \ }
 
 "Eclim also wants in on that sweet omnifunc action
 let g:EclimCompletionMethod = 'omnifunc'
@@ -90,12 +89,44 @@ autocmd TextChanged,TextChangedI <buffer> silent write
 "
 " =================== YCM ======================= {{{
 "let g:ycm_global_ycm_extra_conf = '$USER/.config/nvim/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
-let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
-let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
-let g:ycm_complete_in_comments = 1 " Completion in comments
-let g:ycm_complete_in_strings = 1 " Completion in string
-set completeopt=longest,menuone
+"let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
+"let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
+"let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
+"let g:ycm_complete_in_comments = 1 " Completion in comments
+"let g:ycm_complete_in_strings = 1 " Completion in string
+"set completeopt=longest,menuone
+
+"}}}
+" ================ Concour of Code ================== {{{
+set hidden
+set cmdheight=2
+set updatetime=300
+set signcolumn=yes
+inoremap <silent><expr> <c-space> coc#refresh()
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+
+" Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[c` and `]c` for navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+" Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+    if &filetype == 'vim'
+        execute 'h '.expand('<cword>')
+    else
+        call CocAction('doHover')
+    endif
+endfunction
 
 "}}}
 " ================ Persistent Undo ================== {{{
