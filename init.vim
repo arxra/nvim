@@ -1,5 +1,5 @@
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
@@ -19,7 +19,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'donRaphaco/neotex'
 Plug 'tpope/vim-dispatch'
 Plug 'sbdchd/neoformat'
-Plug 'dbgx/lldb.nvim' 
+"Plug 'dbgx/lldb.nvim' 
 Plug 'tpope/vim-fugitive'
 
 "--- Language packs ----
@@ -31,8 +31,6 @@ Plug 'mxw/vim-prolog'
 "--- Auto complettion engines and plugs---
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 "Plug 'Valloric/YouCompleteMe'
-"Plug 'ervandew/eclim'
-"Plug 'ternjs/tern_for_vim', { 'do': 'npm install' } "Live seach through code for completion
 Plug 'itchyny/lightline.vim' "Statusline
 "Plug 'jiangmiao/auto-pairs'
 "Plug 'tweekmonster/django-plus.vim'
