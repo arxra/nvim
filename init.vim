@@ -12,7 +12,9 @@ Plug 'shime/vim-livedown'
 Plug 'janko-m/vim-test'
 Plug 'slashmili/alchemist.vim'
 Plug 'iCyMind/NeoSolarized'
-Plug 'sickill/vim-monokai'
+Plug 'kmszk/skyhawk'
+Plug 'morhetz/gruvbox'
+Plug 'srcery-colors/srcery-vim'
 Plug 'brooth/far.vim'
 "Plug 'airodactyl/neovim-ranger'
 Plug 'scrooloose/nerdtree'
@@ -20,19 +22,21 @@ Plug 'donRaphaco/neotex'
 Plug 'tpope/vim-dispatch'
 Plug 'sbdchd/neoformat'
 "Plug 'dbgx/lldb.nvim' 
+
+"--- git --- 
+Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
 "--- Language packs ----
 "Plug 'rust-lang/rust.vim'
-Plug 'elixir-lang/vim-elixir'
-Plug 'LaTeX-Box-Team/LaTeX-Box'
+"Plug 'elixir-lang/vim-elixir'
+"Plug 'LaTeX-Box-Team/LaTeX-Box'
 Plug 'mxw/vim-prolog'
 
 "--- Auto complettion engines and plugs---
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-"Plug 'Valloric/YouCompleteMe'
 Plug 'itchyny/lightline.vim' "Statusline
-"Plug 'jiangmiao/auto-pairs'
+Plug 'jiangmiao/auto-pairs'
 "Plug 'tweekmonster/django-plus.vim'
 Plug 'vim-syntastic/syntastic'
 Plug 'vim-pandoc/vim-pandoc'
@@ -43,18 +47,29 @@ call plug#end()
 
 
 "Highliting/scheme"
-colorscheme monokai
+colorscheme srcery
 set background=dark
 set termguicolors
+hi clear SpellBad
+hi SpellBad cterm=underline
 
 let g:minimap_highlight='Visual'
 
 " ================ Markdown ===========================
 let g:livedown_port = 1337
 
+
+" ================ Split ===========================
+set splitbelow splitright
+
+
 " ================ Keybinds ========================={{{
 let mapleader = " "
 
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
 
 "NERDTREE Toggle key
 map <silent> <F2> :NERDTreeToggle<CR>
@@ -68,7 +83,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 "
 " ================== Theme ======================= {{{
 let g:lightline = {
-            \ 'colorscheme': 'wombat',
+            \ 'colorscheme': 'srcery',
             \ 'active': {
             \   'left': [ [ 'mode', 'paste' ],
             \             [ 'cocstatus','gitbranch', 'readonly', 'filename', 'modified' ] ]
@@ -78,24 +93,12 @@ let g:lightline = {
             \   'cocstatus': 'coc#status'}
             \ }
 
-"Eclim also wants in on that sweet omnifunc action
-let g:EclimCompletionMethod = 'omnifunc'
 :set spelllang=sv,en
 :set spell
 "Autosave? yes please!
 autocmd TextChanged,TextChangedI <buffer> silent write
 "}}}
 "
-" =================== YCM ======================= {{{
-"let g:ycm_global_ycm_extra_conf = '$USER/.config/nvim/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-"let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
-"let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
-"let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
-"let g:ycm_complete_in_comments = 1 " Completion in comments
-"let g:ycm_complete_in_strings = 1 " Completion in string
-"set completeopt=longest,menuone
-
-"}}}
 " ================ Concour of Code ================== {{{
 set hidden
 set cmdheight=2
@@ -150,4 +153,3 @@ set foldmethod=syntax
 let g:indentLine_char = '│'
 
 " }}}
-
