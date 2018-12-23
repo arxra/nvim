@@ -8,24 +8,21 @@ endif
 call plug#begin( '~/.config/nvim/plugged')
 
 Plug 'Yggdroot/indentLine'
-Plug 'shime/vim-livedown'
 Plug 'janko-m/vim-test'
 Plug 'slashmili/alchemist.vim'
-Plug 'iCyMind/NeoSolarized'
-Plug 'kmszk/skyhawk'
-Plug 'morhetz/gruvbox'
 Plug 'srcery-colors/srcery-vim'
-Plug 'brooth/far.vim'
 "Plug 'airodactyl/neovim-ranger'
 Plug 'scrooloose/nerdtree'
 Plug 'donRaphaco/neotex'
-Plug 'tpope/vim-dispatch'
 Plug 'sbdchd/neoformat'
-"Plug 'dbgx/lldb.nvim' 
+"
+"---- Denite, the unifier of all -------
+Plug 'Shougo/denite.nvim'
 
 "--- git --- 
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+Plug 'mbbill/undotree' "Local git for undo history
 
 "--- Language packs ----
 "Plug 'rust-lang/rust.vim'
@@ -38,9 +35,7 @@ Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 Plug 'itchyny/lightline.vim' "Statusline
 Plug 'jiangmiao/auto-pairs'
 "Plug 'tweekmonster/django-plus.vim'
-Plug 'vim-syntastic/syntastic'
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
+"Plug 'vim-syntastic/syntastic'
 
 call plug#end()
 "}}}
@@ -64,23 +59,39 @@ set splitbelow splitright
 
 
 " ================ Keybinds ========================={{{
-let mapleader = " "
+nnoremap <SPACE> <Nop>
+let mapleader=" "
 
 map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+nnoremap <silent> <leader>q  :<C-u>Denite grep<cr><cr>
+nnoremap <silent> <leader>e  :<C-u>Denite buffer<cr>
+nnoremap <silent> <leader>o  :<C-u>Denite coc-symbols<cr>
+nnoremap <silent> <leader>d  :<C-u>Denite coc-diagnostic<cr>
+nnoremap <silent> <leader>c  :<C-u>Denite coc-command<cr>
+nnoremap <silent> <leader>s  :<C-u>Denite coc-service<cr>
+nnoremap <silent> <leader>l  :<C-u>Denite coc-link<cr>
+
 "NERDTREE Toggle key
 map <silent> <F2> :NERDTreeToggle<CR>
+nnoremap <F5> :UndotreeToggle<cr>
 "map <F3> <C-\><C-n>
 tnoremap <Esc> <C-\><C-n> "keybind allows exiting IEx via Esc
 nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" }}}
-"
+
+call denite#custom#map(
+      \ 'insert','<C-j>','<denite:move_to_next_line>','noremap')
+
+call denite#custom#map(
+      \ 'insert','<C-k>','<denite:move_to_previous_line>','noremap')
+
+
 " ================== Theme ======================= {{{
 let g:lightline = {
             \ 'colorscheme': 'srcery',
@@ -129,6 +140,7 @@ function! s:show_documentation()
         call CocAction('doHover')
     endif
 endfunction
+
 
 "}}}
 " ================ Persistent Undo ================== {{{
