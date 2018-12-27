@@ -41,7 +41,8 @@ call plug#end()
 "}}}
 
 
-"Highliting/scheme"
+" ================ Highliting/scheme==========================
+set t_Co=256
 colorscheme srcery
 set background=dark
 set termguicolors
@@ -153,7 +154,7 @@ set undofile
 " }}}
 " ================ Indentation ====================== {{{
 
-set number
+set relativenumber
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
