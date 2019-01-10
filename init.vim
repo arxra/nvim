@@ -29,6 +29,7 @@ Plug 'mbbill/undotree' "Local git for undo history
 "Plug 'elixir-lang/vim-elixir'
 "Plug 'LaTeX-Box-Team/LaTeX-Box'
 Plug 'mxw/vim-prolog'
+Plug 'cespare/vim-toml'
 
 "--- Auto complettion engines and plugs---
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
@@ -108,7 +109,7 @@ let g:lightline = {
 :set spelllang=sv,en
 :set spell
 "Autosave? yes please!
-autocmd TextChanged,TextChangedI <buffer> silent write
+"autocmd TextChanged,TextChangedI <buffer> silent write
 "}}}
 "
 " ================ Concour of Code ================== {{{
@@ -151,18 +152,15 @@ silent !mkdir ~/.config/nvim/backups > /dev/null 2>&1
 set undodir=~/.config/nvim/backups
 set undofile
 
-" }}}
 " ================ Indentation ====================== {{{
-
 set relativenumber
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
+set number
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
 set expandtab
 set smartindent
 set nofoldenable
 set colorcolumn=120
 set foldmethod=syntax
 let g:indentLine_char = '│'
-
-" }}}
