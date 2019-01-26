@@ -3,18 +3,18 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-
 " ================ Plugins ==================== {{{
 call plug#begin( '~/.config/nvim/plugged')
 
 Plug 'Yggdroot/indentLine'
+Plug 'scrooloose/nerdcommenter'
 Plug 'janko-m/vim-test'
 Plug 'slashmili/alchemist.vim'
 Plug 'srcery-colors/srcery-vim'
-"Plug 'airodactyl/neovim-ranger'
 Plug 'scrooloose/nerdtree'
 Plug 'donRaphaco/neotex'
 Plug 'sbdchd/neoformat'
+Plug 'tmsvg/pear-tree' 
 "
 "---- Denite, the unifier of all -------
 Plug 'Shougo/denite.nvim'
@@ -25,18 +25,12 @@ Plug 'tpope/vim-fugitive'
 Plug 'mbbill/undotree' "Local git for undo history
 
 "--- Language packs ----
-"Plug 'rust-lang/rust.vim'
-"Plug 'elixir-lang/vim-elixir'
-"Plug 'LaTeX-Box-Team/LaTeX-Box'
 Plug 'mxw/vim-prolog'
 Plug 'cespare/vim-toml'
 
 "--- Auto complettion engines and plugs---
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-Plug 'itchyny/lightline.vim' "Statusline
-Plug 'jiangmiao/auto-pairs'
-"Plug 'tweekmonster/django-plus.vim'
-"Plug 'vim-syntastic/syntastic'
+Plug 'vim-airline/vim-airline'
 
 call plug#end()
 "}}}
@@ -50,8 +44,31 @@ set termguicolors
 hi clear SpellBad
 hi SpellBad cterm=underline
 
-let g:minimap_highlight='Visual'
+" ================ Autopairs===========================
+" Default rules for matching:
+let g:pear_tree_pairs = {
+            \ '(': {'closer': ')'},
+            \ '[': {'closer': ']'},
+            \ '{': {'closer': '}'},
+            \ "'": {'closer': "'"},
+            \ '"': {'closer': '"'}
+            \ }
+" See pear-tree/ftplugin/ for filetype-specific matching rules
 
+" Pear Tree is enabled for all filetypes by default
+let g:pear_tree_ft_disabled = []
+
+" Pair expansion is dot-repeatable by default
+let g:pear_tree_repeatable_expand = 1
+
+" Smart pairs are disabled by default
+let g:pear_tree_smart_openers = 1
+let g:pear_tree_smart_closers = 1
+let g:pear_tree_smart_backspace = 1
+
+imap <BS> <Plug>(PearTreeBackspace)
+imap <CR> <Plug>(PearTreeExpand)
+imap <Esc> <Plug>(PearTreeFinishExpansion)
 " ================ Markdown ===========================
 let g:livedown_port = 1337
 
@@ -94,20 +111,20 @@ call denite#custom#map(
       \ 'insert','<C-k>','<denite:move_to_previous_line>','noremap')
 
 
-" ================== Theme ======================= {{{
-let g:lightline = {
-            \ 'colorscheme': 'srcery',
-            \ 'active': {
-            \   'left': [ [ 'mode', 'paste' ],
-            \             [ 'cocstatus','gitbranch', 'readonly', 'filename', 'modified' ] ]
-            \ },
-            \ 'component_function': {
-            \   'gitbranch': 'fugitive#head',
-            \   'cocstatus': 'coc#status'}
-            \ }
+" ================== Theme and Look ======================= {{{
+" Colours
+colorscheme srcery
+set background=dark
+set termguicolors
 
-:set spelllang=sv,en
-:set spell
+hi SpellBad cterm=underline
+let g:indentLine_fileTypeExclude = ['tex', 'markdown']
+set spelllang=sv,en
+
+"Airline manual stuff
+let g:airline#extensions#virtualenv#enabled = 1
+let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 "Autosave? yes please!
 "autocmd TextChanged,TextChangedI <buffer> silent write
 "}}}
