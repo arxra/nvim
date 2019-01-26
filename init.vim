@@ -35,13 +35,6 @@ call plug#end()
 "}}}
 
 
-"Highliting/scheme"
-colorscheme srcery
-set background=dark
-set termguicolors
-hi clear SpellBad
-hi SpellBad cterm=underline
-let g:indentLine_fileTypeExclude = ['tex', 'markdown']
 
 " ================ Autopairs===========================
 " Default rules for matching:
@@ -110,8 +103,17 @@ call denite#custom#map(
       \ 'insert','<C-k>','<denite:move_to_previous_line>','noremap')
 
 
-" ================== Theme ======================= {{{
+" ================== Theme and Look ======================= {{{
+" Colours
+colorscheme srcery
+set background=dark
+set termguicolors
+
+hi SpellBad cterm=underline
+let g:indentLine_fileTypeExclude = ['tex', 'markdown']
 set spelllang=sv,en
+
+"Airline manual stuff
 let g:airline#extensions#virtualenv#enabled = 1
 let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
