@@ -34,16 +34,6 @@ Plug 'vim-airline/vim-airline'
 
 call plug#end()
 "}}}
-
-
-" ================ Highliting/scheme==========================
-set t_Co=256
-colorscheme srcery
-set background=dark
-set termguicolors
-hi clear SpellBad
-hi SpellBad cterm=underline
-
 " ================ Autopairs===========================
 " Default rules for matching:
 let g:pear_tree_pairs = {
@@ -69,9 +59,6 @@ let g:pear_tree_smart_backspace = 1
 imap <BS> <Plug>(PearTreeBackspace)
 imap <CR> <Plug>(PearTreeExpand)
 imap <Esc> <Plug>(PearTreeFinishExpansion)
-" ================ Markdown ===========================
-let g:livedown_port = 1337
-
 
 " ================ Split ===========================
 set splitbelow splitright
@@ -96,7 +83,9 @@ nnoremap <silent> <leader>l  :<C-u>Denite coc-link<cr>
 
 "NERDTREE Toggle key
 map <silent> <F2> :NERDTreeToggle<CR>
-nnoremap <F5> :UndotreeToggle<cr>
+map <F3> :make!<CR>
+map <F4> :make! debug<CR>
+map <F5> :UndotreeToggle<cr>
 "map <F3> <C-\><C-n>
 tnoremap <Esc> <C-\><C-n> "keybind allows exiting IEx via Esc
 nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
@@ -125,7 +114,7 @@ set spelllang=sv,en
 let g:airline#extensions#virtualenv#enabled = 1
 let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-"Autosave? yes please!
+"Autosave? maybe? 
 "autocmd TextChanged,TextChangedI <buffer> silent write
 "}}}
 "
@@ -146,9 +135,9 @@ nmap <silent> gr <Plug>(coc-references)
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" Use `[c` and `]c` for navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
+" navigate diagnostics
+nmap <silent> <leader>h <Plug>(coc-diagnostic-prev)
+nmap <silent> <leader>l <Plug>(coc-diagnostic-next)
 " Use K for show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
