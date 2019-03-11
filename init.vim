@@ -27,6 +27,7 @@ Plug 'mbbill/undotree' "Local git for undo history
 "--- Language packs ----
 Plug 'mxw/vim-prolog'
 Plug 'cespare/vim-toml'
+Plug 'octol/vim-cpp-enhanced-highlight'
 
 "--- Auto complettion engines and plugs---
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
@@ -83,8 +84,8 @@ nnoremap <silent> <leader>l  :<C-u>Denite coc-link<cr>
 
 "NERDTREE Toggle key
 map <silent> <F2> :NERDTreeToggle<CR>
-map <F3> :make!<CR>
-map <F4> :make! debug<CR>
+map <silent><F3> :make!<CR>
+map <silent><F4> :make! demo<CR>
 map <F5> :UndotreeToggle<cr>
 "map <F3> <C-\><C-n>
 tnoremap <Esc> <C-\><C-n> "keybind allows exiting IEx via Esc
@@ -117,6 +118,11 @@ let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_
 "Autosave? maybe? 
 "autocmd TextChanged,TextChangedI <buffer> silent write
 "}}}
+"C++ specific highliting 
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+
 "
 " ================ Concour of Code ================== {{{
 set hidden
