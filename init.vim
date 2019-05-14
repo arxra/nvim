@@ -6,9 +6,8 @@ endif
 " ================ Plugins ==================== {{{
 call plug#begin( '~/.config/nvim/plugged')
 
-Plug 'Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine' "Looks good, mostly
 Plug 'scrooloose/nerdcommenter'
-Plug 'janko-m/vim-test'
 Plug 'slashmili/alchemist.vim'
 Plug 'srcery-colors/srcery-vim'
 Plug 'scrooloose/nerdtree'
@@ -16,6 +15,8 @@ Plug 'donRaphaco/neotex'
 Plug 'sbdchd/neoformat'
 Plug 'tmsvg/pear-tree' 
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-dispatch'
+Plug 'majutsushi/tagbar'
 
 "----------------- Fuzzy finder--------------
 Plug 'airblade/vim-rooter'
@@ -31,7 +32,7 @@ Plug 'mbbill/undotree' "Local 'git' for undo history
 Plug 'mxw/vim-prolog'
 Plug 'cespare/vim-toml'
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'vim-latex/vim-latex'
+Plug 'lervag/vimtex'
 Plug 'cespare/vim-toml'
 Plug 'rust-lang/rust.vim'
 
@@ -41,12 +42,15 @@ Plug 'vim-airline/vim-airline'
 
 call plug#end()
 "}}}
+" ================ Load additional files ===========================
+"execute 'source $HOME/.config/nvim/functions.vim' 
 " ================ Autopairs===========================
 " Default rules for matching:
 let g:pear_tree_pairs = {
             \ '(': {'closer': ')'},
             \ '[': {'closer': ']'},
             \ '{': {'closer': '}'},
+            \ '<': {'closer': '>'},
             \ "'": {'closer': "'"},
             \ '"': {'closer': '"'}
             \ }
@@ -64,7 +68,6 @@ let g:pear_tree_smart_closers = 1
 let g:pear_tree_smart_backspace = 1
 
 imap <BS> <Plug>(PearTreeBackspace)
-imap <CR> <Plug>(PearTreeExpand)
 imap <Esc> <Plug>(PearTreeFinishExpansion)
 
 " ================ Split ===========================
@@ -89,13 +92,13 @@ map <C-l> <C-w>l
 
 "F keys Toggle key
 map <silent> <F2> :NERDTreeToggle<CR>
-map <silent><F3> :make!<CR>
-map <silent><F4> :make! demo<CR>
+map <silent> <F3> :TagbarToggle<CR>
 map <F5> :UndotreeToggle<cr>
-"map <F3> <C-\><C-n>
 tnoremap <Esc> <C-\><C-n> "keybind allows exiting IEx via Esc
 nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
@@ -105,6 +108,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 colorscheme srcery
 set background=dark
 set termguicolors
+set guicursor=i-ci:ver30-iCursor-blinkwait300-blinkon200-blinkoff150
 
 hi SpellBad cterm=underline
 let g:indentLine_fileTypeExclude = ['tex', 'markdown']
@@ -117,13 +121,21 @@ let g:airline#extensions#virtualenv#enabled = 1
 let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 "Autosave? maybe? 
-autocmd TextChanged,TextChangedI <buffer> silent write
+"autocmd TextChanged,TextChangedI <buffer> silent write
 "C++ specific highliting 
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
 
 "}}}
+" ================== Linting ======================= {{{
+let g:rustfmt_command = "rustfmt"
+let g:rustfmt_autosave = 1
+let g:rustfmt_emit_files = 1
+let g:rustfmt_fail_silently = 0
+
+nmap <leader>f <Plug>(coc-format):w<cr>
+
 " ================ Concour of Code ================== {{{
 set hidden
 set cmdheight=2
@@ -135,6 +147,11 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
 
 
 " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
@@ -159,8 +176,9 @@ endfunction
 "}}}
 " === Fuzzy searching ============ {{{
 " <leader>s for Rg search
-noremap <leader>s :Rg
+noremap <leader>s :Rooter<cr>:Rg<space>
 let g:fzf_layout = { 'down': '~20%' }
+let g:rooter_manual_only = 1
 
 " 
 if executable('rg')
