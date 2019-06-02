@@ -10,6 +10,7 @@ Plug 'Yggdroot/indentLine' "Looks good, mostly
 Plug 'scrooloose/nerdcommenter'
 Plug 'slashmili/alchemist.vim'
 Plug 'srcery-colors/srcery-vim'
+Plug 'chriskempson/base16-vim'
 Plug 'scrooloose/nerdtree'
 Plug 'donRaphaco/neotex'
 Plug 'sbdchd/neoformat'
@@ -105,8 +106,8 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " ================== Theme and Look ======================= {{{
 " Colours
-colorscheme srcery
-set background=dark
+set t_Co=256
+colorscheme base16-gruvbox-dark-medium
 set termguicolors
 set guicursor=i-ci:ver30-iCursor-blinkwait300-blinkon200-blinkoff150
 
@@ -134,7 +135,9 @@ let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 0
 
-nmap <leader>f <Plug>(coc-format):w<cr>
+let g:vimtex_format_enabled = 1
+
+nmap <leader>f <Plug>(coc-format):w<cr>:w<cr>
 
 " ================ Concour of Code ================== {{{
 set hidden
