@@ -1,10 +1,16 @@
 {
-  "languageserver": {
-    "clangd": {
-      "command": "clangd",
-      "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
-      "filetypes": ["c", "cpp", "objc", "objcpp"]
-    }
-  },
-  "java.errors.incompleteClasspath.severity": "ignore"
+	"languageserver": {
+		"clangd": {
+			"command": "clangd",
+			"rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+			"filetypes": ["c", "cpp", "objc", "objcpp"]
+		},
+		"bash": {
+			"command": "bash-language-server",
+			"filetypes": ["sh"],
+			"args": ["start"],
+			"ignoredRootPaths": ["~"]
+		}
+	},
+	"java.errors.incompleteClasspath.severity": "ignore"
 }

@@ -9,15 +9,20 @@ call plug#begin( '~/.config/nvim/plugged')
 Plug 'Yggdroot/indentLine' "Looks good, mostly
 Plug 'scrooloose/nerdcommenter'
 Plug 'slashmili/alchemist.vim'
-Plug 'srcery-colors/srcery-vim'
-Plug 'chriskempson/base16-vim'
 Plug 'scrooloose/nerdtree'
 Plug 'donRaphaco/neotex'
 Plug 'sbdchd/neoformat'
 Plug 'tmsvg/pear-tree' 
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-dispatch'
-Plug 'majutsushi/tagbar'
+Plug 'liuchengxu/vista.vim'
+Plug 'junegunn/goyo.vim'
+
+"----------------- Eye candy --------------
+Plug 'ryanoasis/vim-devicons'
+Plug 'srcery-colors/srcery-vim'
+Plug 'chriskempson/base16-vim'
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
 
 "----------------- Fuzzy finder--------------
 Plug 'airblade/vim-rooter'
@@ -92,10 +97,16 @@ map <C-l> <C-w>l
 
 
 "F keys Toggle key
-map <silent> <F2> :NERDTreeToggle<CR>
-map <silent> <F3> :TagbarToggle<CR>
+map <silent><F2> :NERDTreeToggle<CR>
+map <silent><F3> :Vista!!<CR>
+map <silent><F4> :Helptags<CR>
 map <F5> :UndotreeToggle<cr>
-tnoremap <Esc> <C-\><C-n> "keybind allows exiting IEx via Esc
+
+ "keybind allows exiting IEx via Esc
+if has("nvim")
+  au TermOpen * tnoremap <Esc> <c-\><c-n>
+  au FileType fzf tunmap <Esc>
+endif
 nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 " Use tab for trigger completion with characters ahead and navigate.
@@ -104,10 +115,25 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 
+" ================== Vista confs ======================= {{{
+let g:vista_default_executive = 'ctags'
+let g:vista_fzf_preview = ['right:50%']
+
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+let g:vista_executive_for = {
+  \ 'javascript': 'coc',
+  \ 'typescript': 'coc',
+  \ 'javascript.jsx': 'coc',
+  \ 'python': 'coc',
+  \ 'c++': 'coc',
+  \ 'rust': 'coc',
+  \ }
+
+
 " ================== Theme and Look ======================= {{{
 " Colours
 set t_Co=256
-colorscheme base16-gruvbox-dark-medium
+colorscheme base16-gruvbox-dark-pale
 set termguicolors
 set guicursor=i-ci:ver30-iCursor-blinkwait300-blinkon200-blinkoff150
 
@@ -116,19 +142,23 @@ let g:indentLine_fileTypeExclude = ['tex', 'markdown']
 set spelllang=sv,en
 filetype plugin on
 
+" The default icons can't be suitable for all the filetypes, you can extend it as you wish.
+let g:vista#renderer#enable_icon = 1
+
 
 "Airline manual stuff
 let g:airline#extensions#virtualenv#enabled = 1
 let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-"Autosave? maybe? 
-"autocmd TextChanged,TextChangedI <buffer> silent write
+
 "C++ specific highliting 
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
 
 "}}}
+"
+"
 " ================== Linting ======================= {{{
 let g:rustfmt_command = "rustfmt"
 let g:rustfmt_autosave = 1
@@ -138,6 +168,8 @@ let g:rustfmt_fail_silently = 0
 let g:vimtex_format_enabled = 1
 
 nmap <leader>f <Plug>(coc-format):w<cr>:w<cr>
+
+
 
 " ================ Concour of Code ================== {{{
 set hidden
@@ -175,9 +207,15 @@ function! s:show_documentation()
     endif
 endfunction
 
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
 
 "}}}
-" === Fuzzy searching ============ {{{
+
+
+
+" ============ Fuzzy searching ============ {{{
 " <leader>s for Rg search
 noremap <leader>s :Rooter<cr>:Rg<space>
 let g:fzf_layout = { 'down': '~20%' }
@@ -194,7 +232,7 @@ command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
   \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \           : fzf#vim#with_preview('right:50%', '?'),
   \   <bang>0)
 
 function! s:list_cmd()
@@ -213,6 +251,8 @@ inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
   \ 'options': '--ansi --delimiter : --nth 3..',
   \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
 
+" Always show preview
+let g:fzf_files_options = '--preview "bat --theme="OneHalfDark" --style=numbers,changes --color always'
 
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
@@ -234,6 +274,8 @@ set wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp
          \*.pys
 
 
+ 
+
 " === Persistent Undo and buffer changes ============ {{{
 
 " Keep undo history across sessions, by storing in file.
@@ -245,9 +287,9 @@ set autowrite
 " ================ Indentation ====================== {{{
 set relativenumber
 set number
-set shiftwidth=3
-set softtabstop=3
-set tabstop=3
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
 set expandtab
 set smartindent
 set nofoldenable
