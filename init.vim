@@ -17,6 +17,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-dispatch'
 Plug 'liuchengxu/vista.vim'
 Plug 'junegunn/goyo.vim'
+Plug 'vimwiki/vimwiki'
 
 "----------------- Eye candy --------------
 Plug 'ryanoasis/vim-devicons'
@@ -84,10 +85,9 @@ set splitbelow splitright
 " Leader stuff
 nnoremap <SPACE> <Nop>
 let mapleader=" "
-nnoremap ; :
 nnoremap <leader><leader> <c-^>
-nnoremap <Leader>w :w<CR>
 
+nnoremap <C-w> :w<CR>
 
 " Orientation
 map <C-h> <C-w>h
@@ -156,9 +156,14 @@ let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
 
-"}}}
-"
-"
+
+
+" ================== Linting ======================= {{{
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
+
+
+
 " ================== Linting ======================= {{{
 let g:rustfmt_command = "rustfmt"
 let g:rustfmt_autosave = 1
@@ -168,7 +173,6 @@ let g:rustfmt_fail_silently = 0
 let g:vimtex_format_enabled = 1
 
 nmap <leader>f <Plug>(coc-format):w<cr>:w<cr>
-
 
 
 " ================ Concour of Code ================== {{{
@@ -209,10 +213,6 @@ endfunction
 
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
-
-
-"}}}
-
 
 
 " ============ Fuzzy searching ============ {{{
@@ -287,9 +287,9 @@ set autowrite
 " ================ Indentation ====================== {{{
 set relativenumber
 set number
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
 set expandtab
 set smartindent
 set nofoldenable
