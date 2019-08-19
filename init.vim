@@ -148,6 +148,7 @@ let g:vista#renderer#enable_icon = 1
 
 "Airline manual stuff
 let g:airline#extensions#virtualenv#enabled = 1
+let g:airline_powerline_fonts = 1
 let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
@@ -217,7 +218,8 @@ set shortmess+=c
 
 " ============ Fuzzy searching ============ {{{
 " <leader>s for Rg search
-noremap <leader>s :Rooter<cr>:Rg<space>
+noremap <leader>s :Rooter<cr>:Rg<cr>
+noremap <leader>b :Buffers<cr>
 let g:fzf_layout = { 'down': '~20%' }
 let g:rooter_manual_only = 1
 
