@@ -6,24 +6,19 @@ endif
 " ================ Plugins ==================== {{{
 call plug#begin( '~/.config/nvim/plugged')
 
-Plug 'Yggdroot/indentLine' "Looks good, mostly
-Plug 'scrooloose/nerdcommenter'
-Plug 'slashmili/alchemist.vim'
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree' " usefull for moving files.
 Plug 'donRaphaco/neotex'
-Plug 'sbdchd/neoformat'
 Plug 'tmsvg/pear-tree' 
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-dispatch'
-Plug 'liuchengxu/vista.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'vimwiki/vimwiki'
 
 "----------------- Eye candy --------------
 Plug 'ryanoasis/vim-devicons'
-Plug 'srcery-colors/srcery-vim'
 Plug 'chriskempson/base16-vim'
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'Yggdroot/indentLine' "Looks good, mostly
+Plug 'vim-airline/vim-airline'
 
 "----------------- Fuzzy finder--------------
 Plug 'airblade/vim-rooter'
@@ -42,10 +37,11 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'lervag/vimtex'
 Plug 'cespare/vim-toml'
 Plug 'rust-lang/rust.vim'
+Plug 'slashmili/alchemist.vim' "Elixir
 
 "--- Auto complettion engines and plugs------
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-Plug 'vim-airline/vim-airline'
+Plug 'liuchengxu/vista.vim' " Shows the structure of the doc, uses coc as provider
 
 call plug#end()
 "}}}
@@ -59,7 +55,8 @@ let g:pear_tree_pairs = {
             \ '{': {'closer': '}'},
             \ '<': {'closer': '>'},
             \ "'": {'closer': "'"},
-            \ '"': {'closer': '"'}
+            \ '"': {'closer': '"'},
+            \ '<*>': {'closer': '</*>'}
             \ }
 " See pear-tree/ftplugin/ for filetype-specific matching rules
 
@@ -87,14 +84,14 @@ nnoremap <SPACE> <Nop>
 let mapleader=" "
 nnoremap <leader><leader> <c-^>
 
-nnoremap <C-w> :w<CR>
+" quicksave
+nnoremap <C-s> :update<CR>
 
 " Orientation
 map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-
 
 "F keys Toggle key
 map <silent><F2> :NERDTreeToggle<CR>
@@ -127,11 +124,12 @@ let g:vista_executive_for = {
   \ 'python': 'coc',
   \ 'c++': 'coc',
   \ 'rust': 'coc',
+  \ 'vimwiki': 'ctags',
   \ }
 
 
 " ================== Theme and Look ======================= {{{
-" Colours
+" Colours and shit 
 set t_Co=256
 colorscheme base16-gruvbox-dark-pale
 set termguicolors
@@ -141,10 +139,10 @@ hi SpellBad cterm=underline
 let g:indentLine_fileTypeExclude = ['tex', 'markdown']
 set spelllang=sv,en
 filetype plugin on
+syntax on
 
 " The default icons can't be suitable for all the filetypes, you can extend it as you wish.
 let g:vista#renderer#enable_icon = 1
-
 
 "Airline manual stuff
 let g:airline#extensions#virtualenv#enabled = 1
@@ -181,6 +179,7 @@ set hidden
 set cmdheight=2
 set updatetime=300
 set signcolumn=yes
+autocmd CursorHold * silent call CocActionAsync('highlight')
 inoremap <silent><expr> <c-space> coc#refresh()
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -201,6 +200,7 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " navigate diagnostics
 nmap <silent> <leader>h <Plug>(coc-diagnostic-prev)
 nmap <silent> <leader>l <Plug>(coc-diagnostic-next)
+
 " Use K for show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -215,6 +215,8 @@ endfunction
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
 
+" Custom Commands
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 " ============ Fuzzy searching ============ {{{
 " <leader>s for Rg search

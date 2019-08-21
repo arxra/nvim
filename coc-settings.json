@@ -2,19 +2,41 @@
   "languageserver": {
     "clangd": {
       "command": "clangd",
-      "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
-      "filetypes": ["c", "cpp", "objc", "objcpp"]
+      "rootPatterns": [
+        "compile_flags.txt",
+        "compile_commands.json",
+        ".vim/",
+        ".git/",
+        ".hg/"
+      ],
+      "filetypes": [
+        "c",
+        "cpp",
+        "objc",
+        "objcpp"
+      ]
     },
     "bash": {
       "command": "bash-language-server",
-      "filetypes": ["sh"],
-      "args": ["start"],
-      "ignoredRootPaths": ["~"]
+      "filetypes": [
+        "sh"
+      ],
+      "args": [
+        "start"
+      ],
+      "ignoredRootPaths": [
+        "~"
+      ]
     },
     "efm": {
       "command": "efm-langserver",
       "args": [],
-      "filetypes": ["vim", "eruby", "markdown", "yaml"]
+      "filetypes": [
+        "vim",
+        "eruby",
+        "markdown",
+        "vimwiki"
+      ]
     }
   },
   "java.errors.incompleteClasspath.severity": "ignore"
