@@ -85,7 +85,8 @@ let mapleader=" "
 nnoremap <leader><leader> <c-^>
 
 " quicksave
-nnoremap <C-s> :update<CR>
+nnoremap <c-s> :update<CR>
+inoremap <c-s> <c-o>:update<CR>
 
 " Orientation
 map <C-h> <C-w>h
