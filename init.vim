@@ -13,6 +13,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-dispatch'
 Plug 'junegunn/goyo.vim'
 Plug 'vimwiki/vimwiki'
+Plug 'janko/vim-test' " Test bindings
+Plug 'tpope/vim-dispatch' " Allow tests to run async in quickfix buffer
 
 "----------------- Eye candy --------------
 Plug 'ryanoasis/vim-devicons'
@@ -40,7 +42,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'slashmili/alchemist.vim' "Elixir
 
 "--- Auto complettion engines and plugs------
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'liuchengxu/vista.vim' " Shows the structure of the doc, uses coc as provider
 
 call plug#end()
@@ -110,6 +112,12 @@ nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+nnoremap <leader>tt :TestNearest<CR>" In a test file runs the test nearest to the cursor, otherwise runs the last nearest test
+nnoremap <leader>tf :TestFile<CR>   " In a test file runs all tests in the current file, otherwise runs the last file tests.
+nnoremap <leader>ts :TestSuite<CR>  " Runs the whole test suite 
+nnoremap <leader>tl :TestLast<CR>   " Runs the last test
+nnoremap <leader>tr :TestVisit<CR>  " Visits the test file from which you last run your tests
 
 
 " ================== Vista confs ======================= {{{
@@ -278,9 +286,16 @@ set wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp
          \*.pys
 
 
+" === Testing configurations              ============ {{{
+let test#strategy = {
+  \ 'nearest': 'neovim',
+  \ 'file':    'dispatch',
+  \ 'suite':   'dispatch',
+\}
+let test#python#runner = 'pytest'
+" Runners available are 'pytest', 'nose', 'nose2', 'djangotest', 'djangonose' and Python's built-in 'unittest'
  
-
-" === Persistent Undo and buffer changes ============ {{{
+" === Persistent Undo and buffer changes  ============ {{{
 
 " Keep undo history across sessions, by storing in file.
 silent !mkdir ~/.config/nvim/backups > /dev/null 2>&1
@@ -289,7 +304,6 @@ set undofile
 set autowrite
 
 " ================ Indentation ====================== {{{
-set relativenumber
 set number
 set shiftwidth=2
 set softtabstop=2
