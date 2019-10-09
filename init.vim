@@ -182,7 +182,7 @@ let g:vimtex_format_enabled = 1
 nmap <leader>f <Plug>(coc-format):w<cr>:w<cr>
 
 
-" ================ Concour of Code ================== {{{
+" ================ Syntax and intelisense ================== {{{
 set hidden
 set cmdheight=2
 set updatetime=300
@@ -200,6 +200,13 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
+" If the file is a tex file, set spell and leader hl to jump to spelling
+" mistakes instead of through diagnostic errors
+autocmd BufNewFile,BufRead *.tex set spell
+autocmd BufNewFile,BufRead *.tex nmap <leader>l ]s
+autocmd BufNewFile,BufRead *.tex nmap <leader>h [s 
+autocmd BufNewFile,BufRead *!.tex nmap <silent> <leader>h <Plug>(coc-diagnostic-prev)
+autocmd BufNewFile,BufRead *!.tex nmap <silent> <leader>l <Plug>(coc-diagnostic-next)
 
 " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
