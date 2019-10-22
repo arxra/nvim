@@ -57,6 +57,13 @@ let g:pear_tree_pairs = {
             \ '{': {'closer': '}'},
             \ "'": {'closer': "'"},
             \ '"': {'closer': '"'},
+            \ }
+autocmd BufNewFile,BufRead *.tex  let g:pear_tree_pairs = {
+            \ '(': {'closer': ')'},
+            \ '[': {'closer': ']'},
+            \ '{': {'closer': '}'},
+            \ "'": {'closer': "'"},
+            \ '"': {'closer': '"'},
             \ '<*>': {'closer': '</*>'}
             \ }
 " See pear-tree/ftplugin/ for filetype-specific matching rules
@@ -203,6 +210,7 @@ nmap <leader>rn <Plug>(coc-rename)
 " If the file is a tex file, set spell and leader hl to jump to spelling
 " mistakes instead of through diagnostic errors
 autocmd BufNewFile,BufRead *.tex set spell
+autocmd BufNewFile,BufRead *.tex set filetype=tex
 autocmd BufNewFile,BufRead *.tex nmap <leader>l ]s
 autocmd BufNewFile,BufRead *.tex nmap <leader>h [s 
 autocmd BufNewFile,BufRead *!.tex nmap <silent> <leader>h <Plug>(coc-diagnostic-prev)
@@ -237,10 +245,32 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " <leader>s for Rg search
 noremap <leader>s :Rooter<cr>:Rg<cr>
 noremap <leader>b :Buffers<cr>
-let g:fzf_layout = { 'down': '~20%' }
+let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 let g:rooter_manual_only = 1
 
-" 
+" This fancy boi opens a floating window for searching.
+function! FloatingFZF()
+  let buf = nvim_create_buf(v:false, v:true)
+  call setbufvar(buf, 'number',  'no')
+
+  let height = float2nr(&lines/1.8)
+  let width = float2nr(&columns - (&columns * 2 / 10))
+  "let width = &columns
+  let row = float2nr(&lines / 3)
+  let col = float2nr((&columns - width) / 3)
+
+  let opts = {
+        \ 'relative': 'editor',
+        \ 'row': row,
+        \ 'col': col,
+        \ 'width': width,
+        \ 'height':height,
+        \ }
+  let win =  nvim_open_win(buf, v:true, opts)
+  call setwinvar(win, '&number', 1)
+  call setwinvar(win, '&relativenumber', 0)
+endfunction
+ 
 if executable('rg')
 	set grepprg=rg\ --no-heading\ --vimgrep
 	set grepformat=%f:%l:%c:%m
@@ -271,7 +301,7 @@ inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
   \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
 
 " Always show preview
-let g:fzf_files_options = '--preview "bat --theme="OneHalfDark" --style=numbers,changes --color always'
+let g:fzf_files_options = '--preview "bat --theme="OneHalfDark" --style=numbers,changes --color always {2..-1} | head -'.&lines.'"'
 
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
@@ -311,6 +341,7 @@ set undofile
 set autowrite
 
 " ================ Indentation ====================== {{{
+set relativenumber
 set number
 set shiftwidth=2
 set softtabstop=2
