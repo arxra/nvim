@@ -218,6 +218,8 @@ autocmd BufNewFile,BufRead *.tex nmap <leader>h [s
 autocmd BufNewFile,BufRead *!.tex nmap <silent> <leader>h <Plug>(coc-diagnostic-prev)
 autocmd BufNewFile,BufRead *!.tex nmap <silent> <leader>l <Plug>(coc-diagnostic-next)
 
+au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+
 " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
