@@ -170,6 +170,8 @@ let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
 
+" Markdown should be able to look prettier
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'rust', 'javascript', 'js=javascript', 'css', 'cpp']
 
 
 " ================== Linting ======================= {{{
