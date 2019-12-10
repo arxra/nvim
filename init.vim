@@ -146,7 +146,7 @@ let g:vista_executive_for = {
 " ================== Theme and Look ======================= {{{
 " Colours and shit 
 set t_Co=256
-colorscheme base16-gruvbox-dark-pale
+colorscheme base16-monokai
 set termguicolors
 set guicursor=i-ci:ver30-iCursor-blinkwait300-blinkon200-blinkoff150
 
@@ -195,7 +195,21 @@ set cmdheight=2
 set updatetime=300
 set signcolumn=yes
 autocmd CursorHold * silent call CocActionAsync('highlight')
+
+let g:coc_global_extensions = [
+  \ 'coc-highlight', 
+  \ 'coc-snippets', 
+  \ 'coc-vimtex', 
+  \ 'coc-highlight', 
+  \ 'coc-java', 
+  \ 'coc-rls', 
+  \ 'coc-python', 
+  \ 'coc-json', 
+  \ 'coc-yaml', 
+  \ 'coc-markdownlint']
+
 inoremap <silent><expr> <c-space> coc#refresh()
+
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
