@@ -170,11 +170,14 @@ let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
 
+" Markdown should be able to look prettier
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'rust', 'javascript', 'js=javascript', 'css', 'cpp']
 
 
 " ================== Linting ======================= {{{
 let g:vimwiki_list = [{'path': '~/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_global_ext = 0
 
 
 
@@ -229,6 +232,8 @@ autocmd BufNewFile,BufRead *.tex nmap <leader>l ]s
 autocmd BufNewFile,BufRead *.tex nmap <leader>h [s 
 autocmd BufNewFile,BufRead *!.tex nmap <silent> <leader>h <Plug>(coc-diagnostic-prev)
 autocmd BufNewFile,BufRead *!.tex nmap <silent> <leader>l <Plug>(coc-diagnostic-next)
+
+au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 
 " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
