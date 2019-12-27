@@ -34,12 +34,8 @@ Plug 'mbbill/undotree' "Local 'git' for undo history
 
 "----------------- Language packs -----------
 Plug 'mxw/vim-prolog'
-Plug 'cespare/vim-toml'
-Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'lervag/vimtex'
-Plug 'cespare/vim-toml'
 Plug 'rust-lang/rust.vim'
-Plug 'slashmili/alchemist.vim' "Elixir
+Plug 'sheerun/vim-polyglot'
 
 "--- Auto complettion engines and plugs------
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
