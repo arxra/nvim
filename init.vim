@@ -1,7 +1,7 @@
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
-    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 " ================ Plugins ==================== {{{
 call plug#begin( '~/.config/nvim/plugged')
@@ -34,8 +34,14 @@ Plug 'mbbill/undotree' "Local 'git' for undo history
 
 "----------------- Language packs -----------
 Plug 'mxw/vim-prolog'
+Plug 'lervag/vimtex'
 Plug 'rust-lang/rust.vim'
-Plug 'sheerun/vim-polyglot'
+Plug 'sirosen/vim-rockstar'
+Plug 'sheerun/vim-polyglot' " Multi language syntax and indendtation package.
+
+"----------------- Python related --------------
+Plug 'plytophogy/vim-virtualenv'
+Plug 'PieterjanMontens/vim-pipenv'
 
 "--- Auto complettion engines and plugs------
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
@@ -48,20 +54,20 @@ call plug#end()
 " ================ Autopairs===========================
 " Default rules for matching:
 let g:pear_tree_pairs = {
-            \ '(': {'closer': ')'},
-            \ '[': {'closer': ']'},
-            \ '{': {'closer': '}'},
-            \ "'": {'closer': "'"},
-            \ '"': {'closer': '"'},
-            \ }
+      \ '(': {'closer': ')'},
+      \ '[': {'closer': ']'},
+      \ '{': {'closer': '}'},
+      \ "'": {'closer': "'"},
+      \ '"': {'closer': '"'},
+      \ }
 autocmd BufNewFile,BufRead *.tex  let g:pear_tree_pairs = {
-            \ '(': {'closer': ')'},
-            \ '[': {'closer': ']'},
-            \ '{': {'closer': '}'},
-            \ "'": {'closer': "'"},
-            \ '"': {'closer': '"'},
-            \ '<*>': {'closer': '</*>'}
-            \ }
+      \ '(': {'closer': ')'},
+      \ '[': {'closer': ']'},
+      \ '{': {'closer': '}'},
+      \ "'": {'closer': "'"},
+      \ '"': {'closer': '"'},
+      \ '<*>': {'closer': '</*>'}
+      \ }
 " See pear-tree/ftplugin/ for filetype-specific matching rules
 
 " Pear Tree is enabled for all filetypes by default
@@ -104,7 +110,7 @@ map <silent><F3> :Vista!!<CR>
 map <silent><F4> :Helptags<CR>
 map <F5> :UndotreeToggle<cr>
 
- "keybind allows exiting IEx via Esc
+"keybind allows exiting IEx via Esc
 if has("nvim")
   au TermOpen * tnoremap <Esc> <c-\><c-n>
   au FileType fzf tunmap <Esc>
@@ -129,14 +135,14 @@ let g:vista_fzf_preview = ['right:50%']
 
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 let g:vista_executive_for = {
-  \ 'javascript': 'coc',
-  \ 'typescript': 'coc',
-  \ 'javascript.jsx': 'coc',
-  \ 'python': 'coc',
-  \ 'c++': 'coc',
-  \ 'rust': 'coc',
-  \ 'vimwiki': 'ctags',
-  \ }
+      \ 'javascript': 'coc',
+      \ 'typescript': 'coc',
+      \ 'javascript.jsx': 'coc',
+      \ 'python': 'coc',
+      \ 'c++': 'coc',
+      \ 'rust': 'coc',
+      \ 'vimwiki': 'ctags',
+      \ }
 
 
 " ================== Theme and Look ======================= {{{
@@ -172,7 +178,7 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'rust', 'javascr
 
 " ================== Linting ======================= {{{
 let g:vimwiki_list = [{'path': '~/vimwiki/',
-                      \ 'syntax': 'markdown', 'ext': '.md'}]
+      \ 'syntax': 'markdown', 'ext': '.md'}]
 let g:vimwiki_global_ext = 0
 
 
@@ -196,16 +202,18 @@ set signcolumn=yes
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 let g:coc_global_extensions = [
-  \ 'coc-highlight', 
-  \ 'coc-snippets', 
-  \ 'coc-vimtex', 
-  \ 'coc-highlight', 
-  \ 'coc-java', 
-  \ 'coc-rls', 
-  \ 'coc-python', 
-  \ 'coc-json', 
-  \ 'coc-yaml', 
-  \ 'coc-markdownlint']
+      \ 'coc-highlight', 
+      \ 'coc-snippets', 
+      \ 'coc-vimtex', 
+      \ 'coc-highlight', 
+      \ 'coc-java', 
+      \ 'coc-rls', 
+      \ 'coc-python', 
+      \ 'coc-json', 
+      \ 'coc-yaml', 
+      \ 'coc-tsserver', 
+      \ 'coc-html', 
+      \ 'coc-markdownlint']
 
 inoremap <silent><expr> <c-space> coc#refresh()
 
@@ -243,11 +251,11 @@ nmap <silent> <leader>l <Plug>(coc-diagnostic-next)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-    if &filetype == 'vim'
-        execute 'h '.expand('<cword>')
-    else
-        call CocAction('doHover')
-    endif
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
 endfunction
 
 " don't give |ins-completion-menu| messages.
@@ -285,19 +293,19 @@ function! FloatingFZF()
   call setwinvar(win, '&number', 1)
   call setwinvar(win, '&relativenumber', 0)
 endfunction
- 
+
 if executable('rg')
-	set grepprg=rg\ --no-heading\ --vimgrep
-	set grepformat=%f:%l:%c:%m
+  set grepprg=rg\ --no-heading\ --vimgrep
+  set grepformat=%f:%l:%c:%m
 endif
 
 
 command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%', '?'),
-  \   <bang>0)
+      \ call fzf#vim#grep(
+      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+      \   <bang>0 ? fzf#vim#with_preview('up:60%')
+      \           : fzf#vim#with_preview('right:50%', '?'),
+      \   <bang>0)
 
 function! s:list_cmd()
   let base = fnamemodify(expand('%'), ':h:.:S')
@@ -305,15 +313,15 @@ function! s:list_cmd()
 endfunction
 
 command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
-  \                               'options': '--tiebreak=index'}, <bang>0)
+      \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
+      \                               'options': '--tiebreak=index'}, <bang>0)
 
 " Global line completion (not just open buffers. ripgrep required.)
 inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
-  \ 'prefix': '^.*$',
-  \ 'source': 'rg -n ^ --color always',
-  \ 'options': '--ansi --delimiter : --nth 3..',
-  \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
+      \ 'prefix': '^.*$',
+      \ 'source': 'rg -n ^ --color always',
+      \ 'options': '--ansi --delimiter : --nth 3..',
+      \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
 
 " Always show preview
 let g:fzf_files_options = '--preview "bat --theme="OneHalfDark" --style=numbers,changes --color always {2..-1} | head -'.&lines.'"'
@@ -334,19 +342,20 @@ let g:fzf_commands_expect = 'alt-enter,ctrl-x'
 set wildmenu
 set wildmode=list:longest
 set wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,
-         \intermediate/*,*.o,*.hi,Zend,vendor
-         \*.pys
+      \intermediate/*,*.o,*.hi,Zend,vendor
+      \*.pys
 
+" ===         Functions             ============ {{{
 
 " === Testing configurations              ============ {{{
 let test#strategy = {
-  \ 'nearest': 'neovim',
-  \ 'file':    'dispatch',
-  \ 'suite':   'dispatch',
-\}
+      \ 'nearest': 'neovim',
+      \ 'file':    'dispatch',
+      \ 'suite':   'dispatch',
+      \}
 let test#python#runner = 'pytest'
 " Runners available are 'pytest', 'nose', 'nose2', 'djangotest', 'djangonose' and Python's built-in 'unittest'
- 
+
 " === Persistent Undo and buffer changes  ============ {{{
 
 " Keep undo history across sessions, by storing in file.
