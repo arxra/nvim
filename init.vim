@@ -148,7 +148,7 @@ let g:vista_executive_for = {
 " ================== Theme and Look ======================= {{{
 " Colours and shit 
 set t_Co=256
-colorscheme base16-monokai
+colorscheme base16-onedark
 set termguicolors
 set guicursor=i-ci:ver30-iCursor-blinkwait300-blinkon200-blinkoff150
 

@@ -15,29 +15,12 @@
         "objc",
         "objcpp"
       ]
-    },
-    "bash": {
-      "command": "bash-language-server",
-      "filetypes": [
-        "sh"
-      ],
-      "args": [
-        "start"
-      ],
-      "ignoredRootPaths": [
-        "~"
-      ]
-    },
-    "efm": {
-      "command": "efm-langserver",
-      "args": [],
-      "filetypes": [
-        "vim",
-        "eruby",
-        "markdown",
-        "vimwiki"
-      ]
     }
   },
+  "python.linting.pylintArgs": [
+    "--max-line-length=120",
+    "--load-plugins",
+    "pylint_django"
+  ],
   "java.errors.incompleteClasspath.severity": "ignore"
 }
