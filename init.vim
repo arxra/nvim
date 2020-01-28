@@ -128,6 +128,11 @@ nnoremap <leader>ts :TestSuite<CR>  " Runs the whole test suite
 nnoremap <leader>tl :TestLast<CR>   " Runs the last test
 nnoremap <leader>tr :TestVisit<CR>  " Visits the test file from which you last run your tests
 
+" Fugitive Conflict Resolution
+nnoremap <leader>gd :Gvdiff<CR>
+nnoremap gdh :diffget //2<CR>
+nnoremap gdl :diffget //3<CR>
+
 
 " ================== Vista confs ======================= {{{
 let g:vista_default_executive = 'ctags'
