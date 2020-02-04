@@ -22,5 +22,20 @@
     "--load-plugins",
     "pylint_django"
   ],
+  "cSpellExt.enableDictionaries": [
+    "swedish"
+  ],
+  "cSpell.language": "en,sv",
+  "cSpell.maxNumberOfProblems": 100,
+  "cSpell.numSuggestions": 12,
+  "cSpell.minWordLength": 3,
+  "cSpell.enabledLanguageIds": [
+    "markdown",
+    "latex",
+    "tex",
+    "vimwiki",
+    "plaintext",
+    "yml"
+  ],
   "java.errors.incompleteClasspath.severity": "ignore"
 }

@@ -6,23 +6,23 @@ endif
 " ================ Plugins ==================== {{{
 call plug#begin( '~/.config/nvim/plugged')
 
-Plug 'scrooloose/nerdtree' " usefull for moving files.
-Plug 'donRaphaco/neotex'
-Plug 'tmsvg/pear-tree' 
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-markdown'
+Plug 'donRaphaco/neotex'
+Plug 'tmsvg/pear-tree' 
 Plug 'junegunn/goyo.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'janko/vim-test' " Test bindings
 Plug 'tpope/vim-dispatch' " Allow tests to run async in quickfix buffer
 
 "----------------- Eye candy --------------
-Plug 'ryanoasis/vim-devicons'
 Plug 'chriskempson/base16-vim'
 Plug 'Yggdroot/indentLine' "Looks good, mostly
 Plug 'vim-airline/vim-airline'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'scrooloose/nerdtree'                      " usefull for moving files.
+Plug 'ryanoasis/vim-devicons'                   " Pretty icons
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'  " Pretty colors for the icons
 
 "----------------- Fuzzy finder--------------
 Plug 'airblade/vim-rooter'
@@ -35,11 +35,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'mbbill/undotree' "Local 'git' for undo history
 
 "----------------- Language packs -----------
+Plug 'sheerun/vim-polyglot'                     " Multi language syntax and indendtation package.
 Plug 'mxw/vim-prolog'
 Plug 'lervag/vimtex'
 Plug 'rust-lang/rust.vim'
 Plug 'sirosen/vim-rockstar'
-Plug 'sheerun/vim-polyglot' " Multi language syntax and indendtation package.
 
 "----------------- Python related --------------
 Plug 'plytophogy/vim-virtualenv'
@@ -47,12 +47,33 @@ Plug 'PieterjanMontens/vim-pipenv'
 
 "--- Auto complettion engines and plugs------
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
-Plug 'liuchengxu/vista.vim' " Shows the structure of the doc, uses coc as provider
+Plug 'liuchengxu/vista.vim'                     " Shows the structure of the doc, uses coc as provider
+Plug 'kkoomen/vim-doge'                         " DOcument GEneration
 
 call plug#end()
 "}}}
-" ================ Load additional files ===========================
-"execute 'source $HOME/.config/nvim/functions.vim' 
+
+" === Persistent Undo and buffer changes  ============ {{{
+
+" Keep undo history across sessions, by storing in file.
+silent !mkdir ~/.config/nvim/backups > /dev/null 2>&1
+set undodir=~/.config/nvim/backups
+set undofile
+set autowrite
+
+" ================ Indentation ====================== {{{
+set relativenumber
+set number
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+set expandtab
+set smartindent
+set nofoldenable
+set colorcolumn=120
+set foldmethod=syntax
+let g:indentLine_char = '│'
+
 " ================ Autopairs===========================
 " Default rules for matching:
 let g:pear_tree_pairs = {
@@ -91,6 +112,8 @@ set splitbelow splitright
 
 
 " ================ Keybinds ========================={{{
+" Mouse has keys?
+set mouse=a
 " Leader stuff
 nnoremap <SPACE> <Nop>
 let mapleader=" "
@@ -139,8 +162,9 @@ nnoremap gdl :diffget //3<CR>
 " ================== Vista confs ======================= {{{
 let g:vista_default_executive = 'ctags'
 let g:vista_fzf_preview = ['right:50%']
-
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+let g:vista#renderer#enable_icon = 1
+
 let g:vista_executive_for = {
       \ 'javascript': 'coc',
       \ 'typescript': 'coc',
@@ -171,13 +195,7 @@ let g:vista#renderer#enable_icon = 1
 "Airline manual stuff
 let g:airline#extensions#virtualenv#enabled = 1
 let g:airline_powerline_fonts = 1
-let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-
-"C++ specific highliting 
-let g:cpp_class_scope_highlight = 1
-let g:cpp_member_variable_highlight = 1
-let g:cpp_class_decl_highlight = 1
+let g:airline#extensions#coc#enabled = 1
 
 " Markdown should be able to look prettier
 let g:markdown_fenced_languages = ['docker=Dockerfile', 'html', 'python', 'bash=sh', 'rust', 'javascript', 'js=javascript', 'css', 'cpp']
@@ -210,10 +228,13 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 let g:coc_global_extensions = [
       \ 'coc-snippets', 
+      \ 'coc-spell-checker', 
+      \ 'coc-cspell-dicts',
       \ 'coc-vimtex', 
       \ 'coc-java', 
       \ 'coc-rls', 
       \ 'coc-python', 
+      \ 'coc-svelte', 
       \ 'coc-json', 
       \ 'coc-yaml', 
       \ 'coc-tsserver', 
@@ -234,6 +255,9 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
+" Show codeactions
+vmap <leader>a <Plug>(coc-codeaction-selected)
+nmap <leader>a <Plug>(coc-codeaction-selected)
 " If the file is a tex file, set spell and leader hl to jump to spelling
 " mistakes instead of through diagnostic errors
 autocmd BufNewFile,BufRead *.tex set spell
@@ -351,8 +375,6 @@ set wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp
       \intermediate/*,*.o,*.hi,Zend,vendor
       \*.pys
 
-" ===         Functions             ============ {{{
-
 " === Testing configurations              ============ {{{
 let test#strategy = {
       \ 'nearest': 'neovim',
@@ -362,23 +384,3 @@ let test#strategy = {
 let test#python#runner = 'pytest'
 " Runners available are 'pytest', 'nose', 'nose2', 'djangotest', 'djangonose' and Python's built-in 'unittest'
 
-" === Persistent Undo and buffer changes  ============ {{{
-
-" Keep undo history across sessions, by storing in file.
-silent !mkdir ~/.config/nvim/backups > /dev/null 2>&1
-set undodir=~/.config/nvim/backups
-set undofile
-set autowrite
-
-" ================ Indentation ====================== {{{
-set relativenumber
-set number
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
-set expandtab
-set smartindent
-set nofoldenable
-set colorcolumn=120
-set foldmethod=syntax
-let g:indentLine_char = '│'
