@@ -11,6 +11,7 @@ Plug 'donRaphaco/neotex'
 Plug 'tmsvg/pear-tree' 
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-markdown'
 Plug 'junegunn/goyo.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'janko/vim-test' " Test bindings
@@ -21,6 +22,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'chriskempson/base16-vim'
 Plug 'Yggdroot/indentLine' "Looks good, mostly
 Plug 'vim-airline/vim-airline'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 "----------------- Fuzzy finder--------------
 Plug 'airblade/vim-rooter'
@@ -129,7 +131,7 @@ nnoremap <leader>tl :TestLast<CR>   " Runs the last test
 nnoremap <leader>tr :TestVisit<CR>  " Visits the test file from which you last run your tests
 
 " Fugitive Conflict Resolution
-nnoremap <leader>gd :Gvdiff<CR>
+nnoremap <leader>gd :Gvdiff!<CR>
 nnoremap gdh :diffget //2<CR>
 nnoremap gdl :diffget //3<CR>
 
@@ -178,7 +180,7 @@ let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
 
 " Markdown should be able to look prettier
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'rust', 'javascript', 'js=javascript', 'css', 'cpp']
+let g:markdown_fenced_languages = ['docker=Dockerfile', 'html', 'python', 'bash=sh', 'rust', 'javascript', 'js=javascript', 'css', 'cpp']
 
 
 " ================== Linting ======================= {{{
@@ -207,16 +209,15 @@ set signcolumn=yes
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 let g:coc_global_extensions = [
-      \ 'coc-highlight', 
       \ 'coc-snippets', 
       \ 'coc-vimtex', 
-      \ 'coc-highlight', 
       \ 'coc-java', 
       \ 'coc-rls', 
       \ 'coc-python', 
       \ 'coc-json', 
       \ 'coc-yaml', 
       \ 'coc-tsserver', 
+      \ 'coc-tslint-plugin', 
       \ 'coc-html', 
       \ 'coc-markdownlint']
 
