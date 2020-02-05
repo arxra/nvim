@@ -17,11 +17,9 @@
       ]
     }
   },
-  "python.linting.pylintArgs": [
-    "--max-line-length=120",
-    "--load-plugins",
-    "pylint_django"
-  ],
+  "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+  "python.linting.pylintEnabled": false,
+  "python.linting.flake8Enabled" : true,
   "cSpellExt.enableDictionaries": [
     "swedish"
   ],

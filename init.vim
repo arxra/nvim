@@ -6,6 +6,7 @@ endif
 " ================ Plugins ==================== {{{
 call plug#begin( '~/.config/nvim/plugged')
 
+Plug 'tpope/vim-dispatch' " Allow tests to run async in quickfix buffer
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-markdown'
@@ -14,7 +15,6 @@ Plug 'tmsvg/pear-tree'
 Plug 'junegunn/goyo.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'janko/vim-test' " Test bindings
-Plug 'tpope/vim-dispatch' " Allow tests to run async in quickfix buffer
 
 "----------------- Eye candy --------------
 Plug 'chriskempson/base16-vim'
@@ -196,6 +196,8 @@ let g:vista#renderer#enable_icon = 1
 let g:airline#extensions#virtualenv#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#coc#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#vista#enabled = 1
 
 " Markdown should be able to look prettier
 let g:markdown_fenced_languages = ['docker=Dockerfile', 'html', 'python', 'bash=sh', 'rust', 'javascript', 'js=javascript', 'css', 'cpp']
@@ -254,6 +256,14 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <leader>qf  <Plug>(coc-fix-current)
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
+" Show all diagnostics
+nnoremap <silent> <leader>v  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <leader>e  :<C-u>CocList extensions<cr>
+" navigate diagnostics
+nmap <silent> <leader>h <Plug>(coc-diagnostic-prev)
+nmap <silent> <leader>l <Plug>(coc-diagnostic-next)
+
 
 " Show codeactions
 vmap <leader>a <Plug>(coc-codeaction-selected)
@@ -273,9 +283,6 @@ au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" navigate diagnostics
-nmap <silent> <leader>h <Plug>(coc-diagnostic-prev)
-nmap <silent> <leader>l <Plug>(coc-diagnostic-next)
 
 " Use K for show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
