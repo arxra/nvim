@@ -19,7 +19,11 @@
   },
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "python.linting.pylintEnabled": false,
-  "python.linting.flake8Enabled" : true,
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Args": [
+    "--max-line-length",
+    "120"
+  ],
   "cSpellExt.enableDictionaries": [
     "swedish"
   ],
@@ -35,5 +39,11 @@
     "plaintext",
     "yml"
   ],
-  "java.errors.incompleteClasspath.severity": "ignore"
+  "java.errors.incompleteClasspath.severity": "ignore",
+  "cSpell.userWords": [
+    "FCPX",
+    "Iconik",
+    "kubernetes",
+    "microservices"
+  ]
 }

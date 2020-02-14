@@ -8,7 +8,6 @@ call plug#begin( '~/.config/nvim/plugged')
 
 Plug 'tpope/vim-dispatch' " Allow tests to run async in quickfix buffer
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-markdown'
 Plug 'donRaphaco/neotex'
 Plug 'tmsvg/pear-tree' 
@@ -40,6 +39,7 @@ Plug 'mxw/vim-prolog'
 Plug 'lervag/vimtex'
 Plug 'rust-lang/rust.vim'
 Plug 'sirosen/vim-rockstar'
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
 "----------------- Python related --------------
 Plug 'plytophogy/vim-virtualenv'
@@ -140,18 +140,18 @@ if has("nvim")
   au TermOpen * tnoremap <Esc> <c-\><c-n>
   au FileType fzf tunmap <Esc>
 endif
-nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
-nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
+nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 5/4)<CR>
+nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 4/5)<CR>
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-nnoremap <leader>tt :TestNearest<CR>" In a test file runs the test nearest to the cursor, otherwise runs the last nearest test
-nnoremap <leader>tf :TestFile<CR>   " In a test file runs all tests in the current file, otherwise runs the last file tests.
-nnoremap <leader>ts :TestSuite<CR>  " Runs the whole test suite 
-nnoremap <leader>tl :TestLast<CR>   " Runs the last test
-nnoremap <leader>tr :TestVisit<CR>  " Visits the test file from which you last run your tests
+nnoremap <leader>tt :TestNearest<CR>
+nnoremap <leader>tf :TestFile<CR>
+nnoremap <leader>ts :TestSuite<CR>
+nnoremap <leader>tl :TestLast<CR>
+nnoremap <leader>tr :TestVisit<CR>
 
 " Fugitive Conflict Resolution
 nnoremap <leader>gd :Gvdiff!<CR>
@@ -181,7 +181,6 @@ let g:vista_executive_for = {
 set t_Co=256
 colorscheme base16-onedark
 set termguicolors
-set guicursor=i-ci:ver30-iCursor-blinkwait300-blinkon200-blinkoff150
 
 hi SpellBad cterm=underline
 let g:indentLine_fileTypeExclude = ['tex', 'markdown']
@@ -227,6 +226,8 @@ set cmdheight=2
 set updatetime=300
 set signcolumn=yes
 autocmd CursorHold * silent call CocActionAsync('highlight')
+
+let g:polyglot_disabled = ['python']
 
 let g:coc_global_extensions = [
       \ 'coc-snippets', 
@@ -383,11 +384,11 @@ set wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp
       \*.pys
 
 " === Testing configurations              ============ {{{
-let test#strategy = {
-      \ 'nearest': 'neovim',
-      \ 'file':    'dispatch',
-      \ 'suite':   'dispatch',
-      \}
+let g:dispatch_handlers = ['job']
+let test#filename_modifier = ':p'
+
+let test#strategy = 'dispatch'
+au FileType qf wincmd J
 let test#python#runner = 'pytest'
 " Runners available are 'pytest', 'nose', 'nose2', 'djangotest', 'djangonose' and Python's built-in 'unittest'
 
